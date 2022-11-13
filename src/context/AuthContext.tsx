@@ -3,7 +3,6 @@ import { getAuth, onAuthStateChanged } from "firebase/auth"
 import type { User } from "firebase/auth"
 import { useRouter } from "next/router"
 import { app } from "../firebase"
-import { atom, useRecoilValue, useSetRecoilState } from "recoil"
 
 
 export type UserType = User | null
@@ -27,7 +26,6 @@ export const AuthProvider = ({ children }: AuthProps) => {
   const auth = getAuth(app)
   const [user, setUser] = useState<UserType>(null)
   const isAvailableForViewing =
-    router.pathname === "/about" ||
     router.pathname === "/login" ||
     router.pathname === "/signup"
   const value = {
