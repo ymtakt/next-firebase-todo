@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
+import { FormControl, FormLabel, Input, Button, Stack } from '@chakra-ui/react'
 
 import { getAuth } from "firebase/auth";
 import { db, app } from "../../src/firebase";
 import firebase from 'firebase/compat/app';
 
-
-import { collection, doc } from "firebase/firestore"
 import { useRouter } from 'next/router';
 
+import { useRecoilState } from "recoil";
+import { todoTitleState, todoContentState } from "../../src/context/atom"
+
 export const CreateTodo = () => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useRecoilState(todoTitleState);
+  const [content, setContent] = useRecoilState(todoContentState);
+
 
   const [todo, setTodo] = useState([]);
 
@@ -46,22 +49,26 @@ export const CreateTodo = () => {
   }
 
   return (
-    <form action="" onSubmit={onClickTodo}>
-      <div>
-        <label htmlFor="">タイトル</label>
-        <input
-          type="text"
-          value={title}
-          onChange={handleChangeTitle} />
-      </div>
-      <div>
-        <label htmlFor="">内容コンテンツ</label>
-        <input
-          type="text"
-          value={content}
-          onChange={handleChangeContent} />
-      </div>
-      <button type="submit">送信</button>
+    <form onSubmit={onClickTodo}>
+      <FormControl>
+        <Stack>
+          <div>
+            <FormLabel htmlFor="">タイトル</FormLabel>
+            <Input
+              type="text"
+              value={title}
+              onChange={handleChangeTitle} />
+          </div>
+          <div>
+            <FormLabel htmlFor="">内容コンテンツ</FormLabel>
+            <Input
+              type="text"
+              value={content}
+              onChange={handleChangeContent} />
+          </div>
+        </Stack>
+        <Button type="submit" colorScheme='teal' size='lg' mt={6}>送信</Button>
+      </FormControl>
     </form>
   )
 }

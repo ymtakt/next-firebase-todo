@@ -27,3 +27,22 @@ export const useAuth = () => {
 export const useUser = (): UserState => {
   return useRecoilValue(userState);
 };
+
+
+export const todoListState = atom({
+  key: "todoList",
+  default: [],
+});
+
+
+//todoTitle
+export const todoTitleState = atom({
+  key: "todoTitle",
+  default: ""
+});
+
+//todoContent
+export const todoContentState = atom({
+  key: "todoContent",
+  default: ""
+});

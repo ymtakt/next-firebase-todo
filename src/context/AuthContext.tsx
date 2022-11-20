@@ -27,7 +27,8 @@ export const AuthProvider = ({ children }: AuthProps) => {
   const [user, setUser] = useState<UserType>(null)
   const isAvailableForViewing =
     router.pathname === "/login" ||
-    router.pathname === "/signup"
+    router.pathname === "/signup" ||
+    router.pathname === "/"
   const value = {
     user,
   }
@@ -40,6 +41,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
     return () => {
       authStateChanged()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

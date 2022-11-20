@@ -7,13 +7,13 @@ import { AuthProvider } from '../src/context/AuthContext'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <RecoilRoot>
-      <AuthProvider>
+    <AuthProvider>
+      <RecoilRoot>
         <ChakraProvider >
           <Component  {...pageProps} />
         </ChakraProvider>
-      </AuthProvider>
-    </RecoilRoot>
+      </RecoilRoot>
+    </AuthProvider>
   );
 }
 

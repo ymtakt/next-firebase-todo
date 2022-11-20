@@ -10,8 +10,12 @@ const Create: React.FC = () => {
     <Box bg="gray.100" minH="100vh">
       <Header />
       <h1>Todo新規作成</h1>
-      <CreateTodo />
-    </Box>
+      <Box maxW="900px" m="90px auto 0">
+        <Box bg="#fff" p={4}>
+          <CreateTodo />
+        </Box>
+      </Box>
+    </Box >
   )
 }
 export default Create; 
