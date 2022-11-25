@@ -7,13 +7,15 @@ import firebase from 'firebase/compat/app';
 
 import { useRouter } from 'next/router';
 
-import { useRecoilState } from "recoil";
-import { todoTitleState, todoContentState } from "../../src/context/atom"
+import { useRecoilState, useRecoilValue } from "recoil";
+import { todoTitleState, todoContentState, userState } from "../../src/context/atom"
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 
 export const CreateTodo = () => {
   const [title, setTitle] = useRecoilState(todoTitleState);
   const [content, setContent] = useRecoilState(todoContentState);
 
+  const user = useRecoilValue(userState);
 
   const [todo, setTodo] = useState([]);
 
@@ -26,23 +28,31 @@ export const CreateTodo = () => {
     setContent(e.currentTarget.value);
   }
 
-  const onClickTodo = (e: React.ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const auth: any = getAuth(app);
-    const { uid } = auth.currentUser;
+  // const usersRef = collection(db, "todos")
+  // const id = router.query.id as string
+  // console.log(usersRef, id);
 
-    db.collection("todos").add({
+
+  const onClickTodo = async (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const usersRef = collection(db, "todos")
+    const id = router.query.id as string
+
+    await addDoc(usersRef, {
+      // db.collection("todos").add({
       title: title,
       content: content,
-      uid,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    })
-      .then(function (docRef) {
-        console.log("Document written with ID: ", docRef.id);
-      })
-      .catch(function (error) {
-        console.error("Error adding document: ", error);
-      });
+      uid: user?.uid,
+      createdAt: new Date(),
+      // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    // .then(function (docRef) {
+    //   // console.log("Document written with ID: ", docRef.id);
+    // })
+    // .catch(function (error) {
+    //   console.error("Error adding document: ", error);
+    // });
     setTitle("")
     setContent("")
     router.push("/todos");

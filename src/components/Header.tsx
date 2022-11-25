@@ -4,11 +4,12 @@ import Link from 'next/link'
 import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "next/router";
 
-import { app } from "../../src/firebase";
+import { app, auth } from "../../src/firebase";
 import { useAuth } from "../context/atom";
 
 export const Header = () => {
-  const auth = getAuth(app);
+  // const auth = getAuth(app);
+  // const user = useAuth();
   const user = useAuth();
 
   const router = useRouter();

@@ -1,14 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Header } from '../../src/components/Header'
 import { Box, Flex, Stack } from '@chakra-ui/react'
 import { FormControl, FormLabel, Input, Button } from '@chakra-ui/react'
 
 import { getAuth } from "firebase/auth";
-import { db, app } from "../../src/firebase";
+import { db, app, auth } from "../../src/firebase";
 
 import { useRouter } from 'next/router';
+import { collection, setDoc, doc } from 'firebase/firestore';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../../src/context/atom';
 
 const Create: React.FC = () => {
+  const user = useRecoilValue(userState);
+
   const router = useRouter();
   console.log(router.query.todoInfo);
 
@@ -26,24 +31,37 @@ const Create: React.FC = () => {
   const onClickTodo = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const auth: any = getAuth(app);
-    const { uid } = auth.currentUser;
+    // const auth = getAuth(app);
+    // const { uid } = user;
 
-    const usersRef = db.collection("todos")
-    const id: any = router.query.id
+    const usersRef = collection(db, "todos")
+    const id = router.query.id as string
 
-    usersRef.doc(id).set({
+    setDoc(doc(usersRef, id), {
       title: title,
       content: content,
-      uid,
+      uid: user?.uid,
       createdAt: new Date(),
     });
+
+    // usersRef.doc(id).set({
+    //   title: title,
+    //   content: content,
+    //   uid,
+    //   createdAt: new Date(),
+    // });
 
     setTitle("")
     setContent("")
     router.push("/todos");
   }
 
+  console.log(user);
+
+  // console.log(auth.currentUser);
+  // useEffect(() => {
+  //   console.log(auth)
+  // }, [auth]);
 
   return (
     <Box bg="gray.100" minH="100vh">

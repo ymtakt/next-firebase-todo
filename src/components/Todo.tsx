@@ -10,12 +10,16 @@ import { doc, deleteDoc } from 'firebase/firestore';
 const Todo: React.FC<any> = (props: any) => {
 
   const onClickDelete = async (id: string | undefined) => {
-    db.collection("todos").doc(id).delete();
-    // console.log(id);
 
+    const userDocumentRef = doc(db, 'todos', id);
+    await deleteDoc(userDocumentRef);
+
+    // db.collection("todos").doc(id).delete();
+
+
+    // console.log(id);
     // await deleteDoc(doc(db, "todos", id));
   };
-
 
 
   return (
