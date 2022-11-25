@@ -5,12 +5,15 @@ import 'moment/locale/ja';
 
 import Link from 'next/link';
 import { db } from '../firebase';
+import { doc, deleteDoc } from 'firebase/firestore';
 
-const Todo: React.FC = (props: any) => {
+const Todo: React.FC<any> = (props: any) => {
 
-  const onClickDelete = (id: string | undefined) => {
+  const onClickDelete = async (id: string | undefined) => {
     db.collection("todos").doc(id).delete();
-    console.log(id);
+    // console.log(id);
+
+    // await deleteDoc(doc(db, "todos", id));
   };
 
 

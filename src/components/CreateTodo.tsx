@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { FormControl, FormLabel, Input, Button, Stack } from '@chakra-ui/react'
 
 import { getAuth } from "firebase/auth";
-import { db, app } from "../../src/firebase";
+import { db, app, auth } from "../../src/firebase";
 import firebase from 'firebase/compat/app';
 
 import { useRouter } from 'next/router';
@@ -28,7 +28,7 @@ export const CreateTodo = () => {
 
   const onClickTodo = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const auth = getAuth(app);
+    const auth: any = getAuth(app);
     const { uid } = auth.currentUser;
 
     db.collection("todos").add({

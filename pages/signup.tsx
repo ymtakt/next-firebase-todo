@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link'
 import {
   Box, Flex, Heading, Divider, Stack, Input, Button, AlertDialog,
@@ -17,6 +17,8 @@ import { Header } from '../src/components/Header'
 import { useAuthContext } from '../src/context/AuthContext';
 
 const Signup: React.FC = () => {
+  const cancelRef = React.useRef<any>()
+
   const { user } = useAuthContext();
   const isLoggedIn = !!user;
 
@@ -54,7 +56,7 @@ const Signup: React.FC = () => {
     <>
       <AlertDialog
         isOpen={isLoggedIn}
-        // leastDestructiveRef={cancelRef}
+        leastDestructiveRef={cancelRef}
         onClose={handleClose}
       >
         <AlertDialogOverlay>

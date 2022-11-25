@@ -55,7 +55,7 @@ const Todos: NextPage = () => {
       </List>
       <Box textAlign="center" mt={10} mb={10}>
         <Button colorScheme='teal' size='lg'>
-          <Link href="/todos/create" size="md" >Todoの新規作成</Link>
+          <Link href="/todos/create"  >Todoの新規作成</Link>
         </Button>
       </Box>
     </Box>

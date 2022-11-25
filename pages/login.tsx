@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Link from 'next/link'
 import {
-  Box, Flex, Heading, Divider, Stack, Input, Button, Alert, AlertIcon, AlertDialog,
+  Box, Flex, Heading, Divider, Stack, Input, Button, AlertDialog,
   AlertDialogBody,
   AlertDialogFooter,
   AlertDialogHeader,
@@ -15,8 +15,10 @@ import { app } from "../src/firebase";
 
 import { Header } from '../src/components/Header'
 import { useAuthContext } from '../src/context/AuthContext';
+import React from 'react';
 
 const Login: React.FC = () => {
+  const cancelRef = React.useRef<any>()
 
   //ユーザー情報の監視(ログイン)
   const { user } = useAuthContext();
@@ -58,9 +60,8 @@ const Login: React.FC = () => {
     <>
       <AlertDialog
         isOpen={isLoggedIn}
-        // leastDestructiveRef={cancelRef}
-        onClose={handleClose}
-      >
+        leastDestructiveRef={cancelRef}
+        onClose={handleClose}>
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize='lg' fontWeight='bold'>

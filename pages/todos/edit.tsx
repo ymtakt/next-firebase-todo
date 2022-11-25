@@ -26,7 +26,7 @@ const Create: React.FC = () => {
   const onClickTodo = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const auth = getAuth(app);
+    const auth: any = getAuth(app);
     const { uid } = auth.currentUser;
 
     const usersRef = db.collection("todos")
